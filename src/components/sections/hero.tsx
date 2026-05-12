@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button, ArrowRight } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -18,16 +18,49 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const EASE_INOUT = [0.65, 0, 0.35, 1] as const;
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+    tryPlay();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") tryPlay();
+    };
+    const onInteract = () => {
+      tryPlay();
+      window.removeEventListener("pointerdown", onInteract);
+      window.removeEventListener("keydown", onInteract);
+      window.removeEventListener("touchstart", onInteract);
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pointerdown", onInteract, { once: true });
+    window.addEventListener("keydown", onInteract, { once: true });
+    window.addEventListener("touchstart", onInteract, { once: true });
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pointerdown", onInteract);
+      window.removeEventListener("keydown", onInteract);
+      window.removeEventListener("touchstart", onInteract);
+    };
+  }, []);
+
   return (
     <section className="relative isolate flex min-h-[100svh] w-full flex-col items-center overflow-hidden bg-[var(--bg-base)] px-5 pt-24 sm:px-6 sm:pt-28">
       {/* Video background */}
       <video
+        ref={videoRef}
         aria-hidden
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         disablePictureInPicture
         disableRemotePlayback
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
