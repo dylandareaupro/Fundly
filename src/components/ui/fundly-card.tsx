@@ -86,10 +86,18 @@ export function FundlyCard({
         />
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[22px]"
+          className="pointer-events-none absolute inset-0"
           style={{
             background: interactive ? glareBg : undefined,
             mixBlendMode: "overlay",
+            WebkitMaskImage: `url(${src})`,
+            maskImage: `url(${src})`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskMode: "alpha",
+            maskMode: "alpha",
           }}
         />
       </motion.div>
