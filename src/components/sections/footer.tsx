@@ -12,7 +12,7 @@ const COLUMNS = [
   },
   {
     title: "LÉGAL",
-    links: ["Confidentialité", "Cookies", "Sécurité", "Mentions FCA"],
+    links: ["Confidentialité", "Cookies", "Sécurité", "Mentions ACPR"],
   },
 ];
 
@@ -114,7 +114,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-[12px] text-white/55 md:flex-row md:items-center">
-          <p>© 2026 Fundly Banking Ltd. · Régulée par la FCA (réf. 924–FD)</p>
+          <p>© 2026 Fundly SAS · Agréée par l&apos;ACPR (réf. 92–924)</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <a href="#" data-cursor="hover" className="hover:text-white">Statut</a>
             <a href="#" data-cursor="hover" className="hover:text-white">Twitter</a>

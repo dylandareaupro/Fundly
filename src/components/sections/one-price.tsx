@@ -173,7 +173,6 @@ export function OnePrice() {
               </p>
 
               <div className="mt-7 flex items-baseline gap-1">
-                <span className="text-[15px] text-white/50">$</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={annual ? "a" : "m"}
@@ -186,6 +185,9 @@ export function OnePrice() {
                     {annual ? plan.annual : plan.monthly}
                   </motion.span>
                 </AnimatePresence>
+                <span className="text-[24px] font-bold leading-none text-white">
+                  €
+                </span>
                 <span className="ml-2 text-[13px] text-white/50">
                   / mois, facturé {annual ? "annuellement" : "mensuellement"}
                 </span>
@@ -234,7 +236,7 @@ export function OnePrice() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-10 text-center text-[13px] text-[var(--fg-tertiary)]"
         >
-          Toutes les formules incluent la protection FSCS jusqu&apos;à £85 000 · Fundly est régulée par la FCA
+          Toutes les formules incluent la garantie des dépôts FGDR jusqu&apos;à 100 000€ · Fundly est agréée par l&apos;ACPR
         </motion.p>
       </div>
     </section>

@@ -5,10 +5,13 @@ import { AnimatedCounter } from "@/components/animated-counter";
 import { LivingGrid } from "@/components/ui/living-grid";
 
 const PROJECTS = [
-  { name: "Reforestation · Bénin", value: 78 },
-  { name: "Énergie solaire · Inde", value: 63 },
-  { name: "Mangroves · Sénégal", value: 91 },
+  { name: "Reforestation · Bénin", value: 42 },
+  { name: "Énergie solaire · Inde", value: 31 },
+  { name: "Mangroves · Sénégal", value: 27 },
 ];
+
+const formatThousands = (v: number) =>
+  Math.round(v).toLocaleString("fr-FR").replace(/,/g, " ");
 
 export function ImpactDashboard() {
   return (
@@ -31,9 +34,13 @@ export function ImpactDashboard() {
               </p>
 
               <h2 className="mt-7 text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1] tracking-[-0.03em] text-white">
-                <span className="inline-flex items-baseline gap-3">
-                  <span className="text-[var(--accent-bright)]">
-                    <AnimatedCounter to={0} duration={1} />
+                <span className="inline-flex flex-wrap items-baseline gap-3">
+                  <span className="text-[var(--accent-bright)] tabular-nums">
+                    <AnimatedCounter
+                      to={47329}
+                      duration={1.5}
+                      format={formatThousands}
+                    />
                   </span>
                   <span className="text-[clamp(1.5rem,2.6vw,2.25rem)] font-bold">
                     tonnes de CO<sub className="text-[0.6em]">2</sub>

@@ -134,9 +134,9 @@ function TrustedPill() {
         </span>
       </div>
       <p className="text-[16px] font-bold leading-tight text-[var(--fg-primary)]">
-        Approuvé par des
+        Approuvé par 250 000+
         <br />
-        milliers d&apos;utilisateurs
+        utilisateurs
       </p>
     </div>
   );

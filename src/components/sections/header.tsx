@@ -127,7 +127,14 @@ export function Header() {
             ))}
           </ul>
 
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="flex shrink-0 items-center gap-1 md:gap-3">
+            <a
+              href="#"
+              data-cursor="hover"
+              className="hidden md:inline-flex items-center text-[13px] font-medium text-white/70 hover:text-white transition-colors"
+            >
+              Se connecter
+            </a>
             <Magnetic strength={0.3} className="hidden sm:inline-block">
               <Button variant="accent" size="sm" className="!px-4 !py-2.5">
                 Rejoindre le mouvement

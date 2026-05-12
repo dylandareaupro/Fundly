@@ -3,11 +3,41 @@
 import { motion } from "motion/react";
 import { AnimatedCounter } from "@/components/animated-counter";
 
-const STATS = [
-  { value: 250, suffix: "K+", label: "Utilisateurs actifs", note: "dans plus de 40 marchés" },
-  { value: 2, prefix: "$", suffix: "B+", label: "Transactions traitées", note: "annualisé 2026" },
-  { value: 15, suffix: "K", label: "Tonnes de CO₂ compensées", note: "compensations vérifiées" },
-  { value: 40, suffix: "+", label: "Pays couverts", note: "et en croissance" },
+type Stat = {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+  note: string;
+};
+
+const STATS: Stat[] = [
+  {
+    value: 250,
+    suffix: "K+",
+    label: "Utilisateurs actifs",
+    note: "et en croissance",
+  },
+  {
+    value: 2,
+    suffix: "B+ €",
+    label: "Transactions traitées",
+    note: "annualisé 2026",
+  },
+  {
+    value: 15,
+    suffix: "K",
+    label: "Tonnes de CO₂ compensées",
+    note: "compensations vérifiées",
+  },
+  {
+    value: 3.2,
+    decimals: 1,
+    suffix: " s",
+    label: "Temps moyen d'un virement",
+    note: "blockchain on-chain",
+  },
 ];
 
 export function DataStats() {
@@ -33,7 +63,7 @@ export function DataStats() {
                   to={stat.value}
                   prefix={stat.prefix}
                   suffix={stat.suffix}
-                  decimals={0}
+                  decimals={stat.decimals ?? 0}
                 />
               </div>
               <p className="mt-5 text-[16px] font-semibold text-[var(--fg-on-dark-primary)]">

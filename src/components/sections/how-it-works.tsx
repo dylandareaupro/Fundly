@@ -63,8 +63,8 @@ export function HowItWorks() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[320px] text-[14px] leading-[1.6] text-[var(--fg-secondary)]"
           >
-            Pas d&apos;intermédiaire, pas de chargé de clientèle. Un onboarding
-            rapide et privé qui respecte votre temps et vos données.
+            Un onboarding rapide et privé, sans paperasse ni intermédiaire
+            commercial. Votre temps et vos données restent les vôtres.
           </motion.p>
         </div>
 

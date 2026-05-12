@@ -26,7 +26,7 @@ const variantClasses: Record<Variant, string> = {
   "ghost-light":
     "bg-transparent text-[var(--fg-primary)] border border-[var(--border-light-strong)] hover:bg-black/[0.03]",
   "ghost-dark":
-    "bg-transparent text-white border border-white/20 hover:bg-white/[0.06]",
+    "bg-transparent text-white/85 border border-white/12 hover:text-white hover:border-white/25 hover:bg-white/[0.04]",
 };
 
 const sizeClasses: Record<Size, string> = {

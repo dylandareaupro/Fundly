@@ -8,7 +8,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 const QUESTIONS = [
   {
     q: "Est-ce que Fundly est une vraie banque ?",
-    a: "Fundly est un établissement de monnaie électronique agréé, régulé par la FCA. Les dépôts jusqu'à £85 000 sont protégés par le dispositif FSCS via notre partenaire bancaire, Modulr.",
+    a: "Fundly est un établissement de paiement agréé, régulé par l'ACPR (Banque de France). Les dépôts jusqu'à 100 000€ sont garantis par le FGDR via notre partenaire bancaire.",
   },
   {
     q: "À quelle vitesse partent les virements internationaux ?",
