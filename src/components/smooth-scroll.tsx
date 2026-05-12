@@ -27,7 +27,16 @@ function AnchorInterceptor() {
       if (!anchor) return;
 
       const href = anchor.getAttribute("href");
-      if (!href || href === "#") return;
+      if (!href) return;
+
+      const easing = (t: number) => 1 - Math.pow(1 - t, 4); // easeOutQuart
+
+      // Bare "#" → scroll back to the top (acts as a "home" link)
+      if (href === "#") {
+        e.preventDefault();
+        lenis.scrollTo(0, { duration: 1.6, easing });
+        return;
+      }
 
       const el = document.querySelector(href);
       if (!el) return;
@@ -35,7 +44,7 @@ function AnchorInterceptor() {
       e.preventDefault();
       lenis.scrollTo(el as HTMLElement, {
         duration: 1.4,
-        easing: (t: number) => 1 - Math.pow(1 - t, 4), // easeOutQuart
+        easing,
         offset: -90, // leave room for the floating header pill
       });
     };
