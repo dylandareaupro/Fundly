@@ -98,7 +98,7 @@ export function Header() {
       >
         <nav
           className="relative flex w-full items-center justify-between gap-2 rounded-full bg-[var(--bg-dark)] pl-2 pr-2 py-2 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.4)] sm:gap-4"
-          style={{ maxWidth: "760px" }}
+          style={{ maxWidth: "900px" }}
         >
           <a
             href="#"
@@ -119,7 +119,7 @@ export function Header() {
                 <a
                   href={link.href}
                   data-cursor="hover"
-                  className="inline-flex items-center px-3 py-2 hover:text-white transition-colors"
+                  className="inline-flex items-center whitespace-nowrap px-3 py-2 hover:text-white transition-colors"
                 >
                   {link.label}
                 </a>

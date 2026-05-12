@@ -53,7 +53,7 @@ export function Manifesto() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
           variants={wordContainer}
-          className="h-section text-[clamp(2rem,4.4vw,3.8rem)] tracking-[-0.04em] text-[var(--fg-primary)]"
+          className="h-section text-[clamp(2rem,4.4vw,3.8rem)] tracking-[-0.04em] text-[var(--fg-primary)] leading-[1.18]"
         >
           {SEGMENTS.map((seg, segIndex) => {
             const words = seg.text.split(" ");
@@ -64,8 +64,10 @@ export function Manifesto() {
                     key={`${segIndex}-${i}`}
                     className="inline-block overflow-hidden align-bottom"
                     style={{
-                      paddingBottom: "0.1em",
-                      marginBottom: "-0.1em",
+                      paddingBottom: "0.5em",
+                      marginBottom: "-0.5em",
+                      paddingRight: "0.18em",
+                      marginRight: "-0.18em",
                     }}
                   >
                     <motion.span
