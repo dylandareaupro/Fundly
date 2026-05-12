@@ -61,7 +61,7 @@ export function Hero() {
         {/* Headline drops from above, line by line */}
         <h1 className="h-hero mt-7 max-w-[1100px] text-balance text-[clamp(2.25rem,8vw,6rem)] text-white drop-shadow-[0_2px_30px_rgba(0,0,0,0.35)]">
           <DropLine text="La banque de la" delay={0.45} />
-          <RotatingLine delay={1.0} interval={2240} />
+          <RotatingLine delay={1.0} interval={2720} />
         </h1>
 
         <motion.p
