@@ -96,13 +96,10 @@ export function Header() {
         }}
         className="fixed inset-x-0 top-4 z-50 flex justify-center px-3 sm:top-5 sm:px-4"
       >
-        <nav
-          className="relative flex w-full items-center justify-between gap-2 rounded-full bg-[var(--bg-dark)] pl-2 pr-2 py-2 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.4)] sm:gap-4"
-          style={{ maxWidth: "760px" }}
-        >
+        <nav className="relative flex w-auto items-center gap-2 rounded-full bg-[var(--bg-dark)] pl-2 pr-2 py-2 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.4)] sm:gap-3">
           <a
             href="#"
-            className="flex shrink-0 items-center gap-2 pl-1 pr-2"
+            className="flex shrink-0 items-center gap-2 pl-1 pr-1"
             data-cursor="hover"
           >
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[var(--accent)] text-white font-bold text-[18px] leading-none">
@@ -127,14 +124,7 @@ export function Header() {
             ))}
           </ul>
 
-          <div className="flex shrink-0 items-center gap-1 md:gap-2">
-            <a
-              href="#"
-              data-cursor="hover"
-              className="hidden lg:inline-flex items-center whitespace-nowrap text-[13px] font-medium text-white/70 hover:text-white transition-colors"
-            >
-              Se connecter
-            </a>
+          <div className="flex shrink-0 items-center gap-1">
             <Magnetic strength={0.3} className="hidden sm:inline-block">
               <Button
                 variant="accent"
