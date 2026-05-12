@@ -24,25 +24,31 @@ export function Hero() {
     const v = videoRef.current;
     if (!v) return;
     v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("webkit-playsinline", "true");
+
     const tryPlay = () => {
       const p = v.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
-    tryPlay();
+
+    if (v.readyState >= 2) tryPlay();
+    const onReady = () => tryPlay();
     const onVisible = () => {
       if (document.visibilityState === "visible") tryPlay();
     };
-    const onInteract = () => {
-      tryPlay();
-      window.removeEventListener("pointerdown", onInteract);
-      window.removeEventListener("keydown", onInteract);
-      window.removeEventListener("touchstart", onInteract);
-    };
+    const onInteract = () => tryPlay();
+
+    v.addEventListener("loadeddata", onReady);
+    v.addEventListener("canplay", onReady);
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener("pointerdown", onInteract, { once: true });
     window.addEventListener("keydown", onInteract, { once: true });
     window.addEventListener("touchstart", onInteract, { once: true });
     return () => {
+      v.removeEventListener("loadeddata", onReady);
+      v.removeEventListener("canplay", onReady);
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener("pointerdown", onInteract);
       window.removeEventListener("keydown", onInteract);
