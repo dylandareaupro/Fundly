@@ -1,26 +1,149 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --bg-base: #E8EDE8;
+  --bg-light: #EEF1EE;
+  --bg-card: #FFFFFF;
+  --bg-dark: #000000;
+  --bg-dark-card: #0A0F08;
+
+  /* Foreground on light */
+  --fg-primary: #0A0F08;
+  --fg-secondary: #4B5247;
+  --fg-tertiary: #7C8378;
+  --fg-muted: #A4A9A0;
+
+  /* Foreground on dark */
+  --fg-on-dark-primary: #F4F6F2;
+  --fg-on-dark-secondary: #9BA39A;
+  --fg-on-dark-muted: #5A5F58;
+
+  /* Accent — green only */
+  --accent: #018846;
+  --accent-deep: #016834;
+  --accent-bright: #00B85E;
+  --accent-soft: #A8D7BC;
+  --accent-tint: #CDE5D6;
+
+  /* Borders */
+  --border-light: rgba(10, 15, 8, 0.08);
+  --border-light-strong: rgba(10, 15, 8, 0.14);
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-dark-strong: rgba(255, 255, 255, 0.14);
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+  --r-2xl: 32px;
+  --r-pill: 999px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--fg-primary);
+  --color-bg-base: var(--bg-base);
+  --color-bg-light: var(--bg-light);
+  --color-bg-card: var(--bg-card);
+  --color-bg-dark: var(--bg-dark);
+  --color-bg-dark-card: var(--bg-dark-card);
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-tertiary: var(--fg-tertiary);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-on-dark-primary: var(--fg-on-dark-primary);
+  --color-fg-on-dark-secondary: var(--fg-on-dark-secondary);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-tint: var(--accent-tint);
+  --font-sans: var(--font-jakarta);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  -webkit-tap-highlight-color: transparent;
 }
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Typography helpers */
+.f-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.h-hero {
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+}
+
+.h-section {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.t-italic {
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* Custom cursor toggle */
+.cursor-hidden,
+.cursor-hidden * { cursor: none; }
+@media (hover: none) {
+  .cursor-hidden,
+  .cursor-hidden * { cursor: auto; }
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee 90s linear infinite;
+  will-change: transform;
+}
+
+/* Edge fade */
+.edge-mask-x {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; }
