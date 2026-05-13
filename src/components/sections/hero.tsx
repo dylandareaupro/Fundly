@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+
 import { motion, AnimatePresence } from "motion/react";
 import { Button, ArrowRight } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -18,28 +19,36 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const EASE_INOUT = [0.65, 0, 0.35, 1] as const;
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoHostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const v = videoRef.current;
+    const host = videoHostRef.current;
+    if (!host) return;
+    const v = host.querySelector("video") as HTMLVideoElement | null;
     if (!v) return;
+
     v.muted = true;
     v.defaultMuted = true;
-    v.setAttribute("muted", "");
-    v.setAttribute("webkit-playsinline", "true");
+    (v as HTMLVideoElement & { playsInline?: boolean }).playsInline = true;
 
     const tryPlay = () => {
       const p = v.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+      }
     };
 
-    if (v.readyState >= 2) tryPlay();
+    tryPlay();
     const onReady = () => tryPlay();
     const onVisible = () => {
       if (document.visibilityState === "visible") tryPlay();
     };
     const onInteract = () => tryPlay();
 
+    v.addEventListener("loadedmetadata", onReady);
     v.addEventListener("loadeddata", onReady);
     v.addEventListener("canplay", onReady);
     document.addEventListener("visibilitychange", onVisible);
@@ -47,6 +56,7 @@ export function Hero() {
     window.addEventListener("keydown", onInteract, { once: true });
     window.addEventListener("touchstart", onInteract, { once: true });
     return () => {
+      v.removeEventListener("loadedmetadata", onReady);
       v.removeEventListener("loadeddata", onReady);
       v.removeEventListener("canplay", onReady);
       document.removeEventListener("visibilitychange", onVisible);
@@ -58,19 +68,27 @@ export function Hero() {
 
   return (
     <section className="relative isolate flex min-h-[100svh] w-full flex-col items-center overflow-hidden bg-[var(--bg-base)] px-5 pt-24 sm:px-6 sm:pt-28">
-      {/* Video background */}
-      <video
-        ref={videoRef}
+      {/* Video background — rendered via raw HTML so the `muted` attribute
+          is present at parse time. Without that, Chrome/Safari may reject
+          autoplay because React applies `muted` after the element is mounted. */}
+      <div
+        ref={videoHostRef}
         aria-hidden
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        disableRemotePlayback
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
-        src="/media/header.mp4"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full"
+        dangerouslySetInnerHTML={{
+          __html: `<video
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="auto"
+            disablepictureinpicture
+            disableremoteplayback
+            class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+            src="/media/header.mp4"
+          ></video>`,
+        }}
       />
 
       {/* Bottom dark gradient for marquee legibility */}
