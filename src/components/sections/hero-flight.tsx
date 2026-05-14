@@ -68,27 +68,31 @@ export function HeroFlight() {
         >
           <motion.div
             initial={{
-              y: 320,
+              y: 200,
               opacity: 0,
-              scale: 0.72,
-              rotate: -14,
-              filter: "blur(8px)",
+              scale: 0.86,
+              rotate: -6,
             }}
             animate={{
               y: 0,
               opacity: 1,
               scale: 1,
               rotate: 0,
-              filter: "blur(0px)",
             }}
             transition={{
-              duration: 1.3,
-              ease: EASE_OUT,
+              type: "spring",
+              stiffness: 55,
+              damping: 18,
+              mass: 1.1,
+              restDelta: 0.001,
               delay: 1.1,
-              scale: { duration: 1.2, ease: EASE_OUT, delay: 1.1 },
-              filter: { duration: 0.7, ease: EASE_OUT, delay: 1.1 },
+              opacity: { duration: 0.9, ease: EASE_OUT, delay: 1.1 },
             }}
-            style={{ pointerEvents: "auto" }}
+            style={{
+              pointerEvents: "auto",
+              willChange: "transform, opacity",
+              backfaceVisibility: "hidden",
+            }}
           >
             <FundlyCard />
           </motion.div>
