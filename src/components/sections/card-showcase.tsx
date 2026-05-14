@@ -66,14 +66,13 @@ export function CardShowcase() {
 
         // Card subtle rotate/scale through the scroll
         gsap.to(cardRef.current, {
-          rotate: 4,
-          scale: 1.02,
+          rotate: 3,
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current!,
             start: "top top+=80",
             end: "bottom top",
-            scrub: 1,
+            scrub: 2,
           },
         });
       }, sectionRef);
@@ -101,7 +100,7 @@ export function CardShowcase() {
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
               className="mx-auto w-full max-w-[560px]"
             >
-              <FundlyCard src="/media/card-hd.png" aspect="2263 / 1541" />
+              <FundlyCard src="/media/card-hd.webp" aspect="2263 / 1541" />
             </motion.div>
           </div>
 

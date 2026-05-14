@@ -8,15 +8,15 @@ export function Cursor() {
   const y = useMotionValue(-100);
   const [variant, setVariant] = useState<"default" | "hover">("default");
   const rafRef = useRef<number | null>(null);
+  const [enabled, setEnabled] = useState(false);
 
-  const cursorX = useSpring(x, { stiffness: 700, damping: 50, mass: 0.5 });
-  const cursorY = useSpring(y, { stiffness: 700, damping: 50, mass: 0.5 });
-  const ringX = useSpring(x, { stiffness: 180, damping: 22, mass: 0.6 });
-  const ringY = useSpring(y, { stiffness: 180, damping: 22, mass: 0.6 });
+  const ringX = useSpring(x, { stiffness: 220, damping: 24, mass: 0.5 });
+  const ringY = useSpring(y, { stiffness: 220, damping: 24, mass: 0.5 });
 
   useEffect(() => {
     const isCoarse = window.matchMedia("(hover: none)").matches;
     if (isCoarse) return;
+    setEnabled(true);
 
     let mouseX = 0;
     let mouseY = 0;
@@ -50,38 +50,23 @@ export function Cursor() {
     };
   }, [x, y]);
 
-  return (
-    <>
-      <motion.div
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[9998] hidden md:block"
-        style={{ x: cursorX, y: cursorY }}
-      >
-        <motion.div
-          className="-translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_rgba(1,136,70,0.7)]"
-          animate={{
-            width: variant === "default" ? 8 : 5,
-            height: variant === "default" ? 8 : 5,
-          }}
-          transition={{ duration: 0.2 }}
-        />
-      </motion.div>
+  if (!enabled) return null;
 
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none fixed left-0 top-0 z-[9998] hidden md:block"
+      style={{ x: ringX, y: ringY, willChange: "transform" }}
+    >
       <motion.div
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[9997] hidden md:block"
-        style={{ x: ringX, y: ringY }}
-      >
-        <motion.div
-          className="-translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--accent)]"
-          animate={{
-            width: variant === "hover" ? 44 : 28,
-            height: variant === "hover" ? 44 : 28,
-            opacity: variant === "hover" ? 0.9 : 0.55,
-          }}
-          transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        />
-      </motion.div>
-    </>
+        className="-translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--accent)] bg-[var(--accent)]/10"
+        animate={{
+          width: variant === "hover" ? 42 : 22,
+          height: variant === "hover" ? 42 : 22,
+          opacity: variant === "hover" ? 1 : 0.85,
+        }}
+        transition={{ type: "spring", stiffness: 320, damping: 26 }}
+      />
+    </motion.div>
   );
 }

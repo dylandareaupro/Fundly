@@ -23,7 +23,7 @@ export function FundlyCard({
   className,
   interactive = true,
   rotateZ = 0,
-  src = "/media/card-hd.png",
+  src = "/media/card-hd.webp",
   aspect = "2263 / 1541",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -71,7 +71,8 @@ export function FundlyCard({
           rotateZ,
           aspectRatio: aspect,
           transformStyle: "preserve-3d",
-          filter: "drop-shadow(0 30px 80px rgba(0,0,0,0.25))",
+          borderRadius: "5.5%",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.25)",
         }}
         className="relative w-full will-change-transform"
       >

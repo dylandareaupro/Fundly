@@ -82,7 +82,7 @@ export function Hero() {
             loop
             playsinline
             webkit-playsinline="true"
-            preload="auto"
+            preload="metadata"
             disablepictureinpicture
             disableremoteplayback
             class="pointer-events-none absolute inset-0 h-full w-full object-cover"

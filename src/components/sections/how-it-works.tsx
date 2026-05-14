@@ -6,8 +6,8 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 
 const STEPS = [
   {
-    image: "/media/plant.jpg",
-    container: "/media/step-1.png",
+    image: "/media/plant.webp",
+    container: "/media/step-1.webp",
     containerW: 1352,
     containerH: 660,
     badge: "/media/badge-01.png",
@@ -16,8 +16,8 @@ const STEPS = [
       "Disponible sur iOS et Android. Inscrivez-vous en moins de deux minutes — sans vérification de crédit, sans liste d'attente, sans paperasse.",
   },
   {
-    image: "/media/sand.jpg",
-    container: "/media/step-2.png",
+    image: "/media/sand.webp",
+    container: "/media/step-2.webp",
     containerW: 1239,
     containerH: 914,
     badge: "/media/badge-02.png",
@@ -26,8 +26,8 @@ const STEPS = [
       "Reliez une source — ancienne banque, carte, exchange — en quelques touches. Vos identifiants ne sont jamais stockés. Entrez et sortez quand vous voulez.",
   },
   {
-    image: "/media/water.jpg",
-    container: "/media/step-3.png",
+    image: "/media/water.webp",
+    container: "/media/step-3.webp",
     containerW: 1239,
     containerH: 738,
     badge: "/media/badge-03.png",

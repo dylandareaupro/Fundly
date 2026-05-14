@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { motion, useInView } from "motion/react";
+import { useInView } from "motion/react";
 
 type Props = {
   cols?: number;
@@ -12,7 +12,9 @@ type Props = {
 /**
  * One-shot reveal grid for the Impact 2026 dashboard.
  * Cells fade in along a diagonal wave with subtle scale + glow,
- * then settle into a static, calm state. No pointer interaction.
+ * then settle into a static, calm state. Uses CSS animations driven
+ * by inline custom properties so all 99 cells share a single keyframe
+ * animation instead of spawning 99 motion components.
  */
 export function LivingGrid({
   cols = 11,
@@ -23,17 +25,15 @@ export function LivingGrid({
   const inView = useInView(ref, { once: true, amount: 0.25 });
 
   const cells = useMemo(() => {
-    const arr: { x: number; y: number; delay: number; intensity: number }[] = [];
+    const arr: { delay: number; intensity: number }[] = [];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        // diagonal wave delay (top-left → bottom-right)
         const delay = (x + y * 0.6) * 0.045;
-        // radial intensity from center for a soft vignette feel
         const cx = (cols - 1) / 2;
         const cy = (rows - 1) / 2;
         const d = Math.hypot(x - cx, y - cy) / Math.hypot(cx, cy);
-        const intensity = 1 - d * 0.55; // 1 at center, ~0.45 at edges
-        arr.push({ x, y, delay, intensity });
+        const intensity = 1 - d * 0.55;
+        arr.push({ delay, intensity });
       }
     }
     return arr;
@@ -43,6 +43,7 @@ export function LivingGrid({
     <div
       ref={ref}
       className={className}
+      data-in-view={inView ? "true" : "false"}
       style={{
         position: "relative",
         display: "grid",
@@ -53,12 +54,28 @@ export function LivingGrid({
         isolation: "isolate",
       }}
     >
-      {/* one-shot diagonal sweep glow */}
-      <motion.div
+      <style>{`
+        @keyframes lg-cell-in {
+          0%   { opacity: 0; transform: scale(0.4); }
+          100% { opacity: var(--lg-target-opacity, 0.6); transform: scale(1); }
+        }
+        @keyframes lg-sweep {
+          0%   { opacity: 0; transform: translateX(-30%); }
+          25%  { opacity: 0.6; }
+          100% { opacity: 0; transform: translateX(130%); }
+        }
+        [data-in-view="true"] .lg-cell {
+          animation: lg-cell-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: var(--lg-delay, 0s);
+        }
+        [data-in-view="true"] .lg-sweep {
+          animation: lg-sweep 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+      `}</style>
+
+      <div
         aria-hidden
-        initial={{ opacity: 0, x: "-30%" }}
-        animate={inView ? { opacity: [0, 0.6, 0], x: ["-30%", "130%", "130%"] } : { opacity: 0 }}
-        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className="lg-sweep"
         style={{
           position: "absolute",
           inset: 0,
@@ -67,24 +84,17 @@ export function LivingGrid({
             "linear-gradient(110deg, transparent 30%, rgba(43,211,127,0.35) 50%, transparent 70%)",
           mixBlendMode: "screen",
           zIndex: 0,
+          opacity: 0,
+          willChange: "transform, opacity",
         }}
       />
 
       {cells.map((c, i) => (
-        <motion.div
+        <div
           key={i}
-          initial={{ opacity: 0, scale: 0.4 }}
-          animate={
-            inView
-              ? { opacity: 0.2 + c.intensity * 0.55, scale: 1 }
-              : { opacity: 0, scale: 0.4 }
-          }
-          transition={{
-            duration: 0.7,
-            delay: c.delay,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+          className="lg-cell"
           style={{
+            opacity: 0,
             borderRadius: 6,
             background:
               "linear-gradient(135deg, rgba(0,166,83,0.95) 0%, rgba(0,129,63,0.85) 100%)",
@@ -93,6 +103,8 @@ export function LivingGrid({
                 ? "0 0 14px rgba(43,211,127,0.18)"
                 : "none",
             zIndex: 1,
+            ["--lg-delay" as string]: `${c.delay}s`,
+            ["--lg-target-opacity" as string]: `${0.2 + c.intensity * 0.55}`,
           }}
         />
       ))}

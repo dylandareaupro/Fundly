@@ -114,7 +114,7 @@ export function DownloadHero() {
           className="relative mt-14 mb-[-32px] w-full max-w-[340px]"
         >
           <Image
-            src="/media/phone-download.png"
+            src="/media/phone-download.webp"
             alt="Aperçu de l'application Fundly"
             width={594}
             height={520}

@@ -93,7 +93,7 @@ function PhoneScreen() {
     >
       <div className="relative aspect-[688/716] overflow-hidden rounded-[32px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.06]">
         <Image
-          src="/media/screen-principles.png"
+          src="/media/screen-principles.webp"
           alt="Aperçu de l'application Fundly"
           fill
           sizes="(max-width: 768px) 90vw, 420px"
