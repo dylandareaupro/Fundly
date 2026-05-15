@@ -60,7 +60,13 @@ export function FundlyCard({
   };
 
   return (
-    <div className={className} style={{ perspective: 1400 }}>
+    <div
+      className={className}
+      style={{
+        perspective: 1400,
+        filter: "drop-shadow(0 28px 40px rgba(0,0,0,0.28))",
+      }}
+    >
       <motion.div
         ref={ref}
         onPointerMove={onMove}
@@ -71,8 +77,6 @@ export function FundlyCard({
           rotateZ,
           aspectRatio: aspect,
           transformStyle: "preserve-3d",
-          borderRadius: "5.5%",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.25)",
         }}
         className="relative w-full will-change-transform"
       >

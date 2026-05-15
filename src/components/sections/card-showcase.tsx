@@ -94,13 +94,21 @@ export function CardShowcase() {
           {/* Left: pinned card on desktop */}
           <div ref={cardRef} className="md:will-change-transform">
             <motion.div
-              initial={{ y: 50, opacity: 0, rotateZ: -3 }}
-              whileInView={{ y: 0, opacity: 1, rotateZ: 0 }}
+              initial={{ y: 200, opacity: 0, scale: 0.86, rotate: -6 }}
+              whileInView={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                type: "spring",
+                stiffness: 55,
+                damping: 18,
+                mass: 1.1,
+                restDelta: 0.001,
+                opacity: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+              }}
+              style={{ willChange: "transform, opacity", backfaceVisibility: "hidden" }}
               className="mx-auto w-full max-w-[560px]"
             >
-              <FundlyCard src="/media/card-hd.webp" aspect="2263 / 1541" />
+              <FundlyCard />
             </motion.div>
           </div>
 
