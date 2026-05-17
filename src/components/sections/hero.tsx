@@ -32,6 +32,12 @@ export function Hero() {
     (v as HTMLVideoElement & { playsInline?: boolean }).playsInline = true;
 
     const tryPlay = () => {
+      // Safari hard-refresh: the element can land in NETWORK_EMPTY /
+      // HAVE_NOTHING and play() resolves without ever actually starting.
+      // Force a load() in that case so the pipeline gets primed.
+      if (v.readyState < 2 || v.networkState === 0) {
+        try { v.load(); } catch {}
+      }
       const p = v.play();
       if (p && typeof p.catch === "function") {
         p.catch(() => {
@@ -47,11 +53,15 @@ export function Hero() {
       if (document.visibilityState === "visible") tryPlay();
     };
     const onInteract = () => tryPlay();
+    // Safari restores the page from bfcache on back/forward and after some
+    // refreshes — the video stays paused unless we kick it again.
+    const onPageShow = () => tryPlay();
 
     v.addEventListener("loadedmetadata", onReady);
     v.addEventListener("loadeddata", onReady);
     v.addEventListener("canplay", onReady);
     document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onPageShow);
     window.addEventListener("pointerdown", onInteract, { once: true });
     window.addEventListener("keydown", onInteract, { once: true });
     window.addEventListener("touchstart", onInteract, { once: true });
@@ -60,6 +70,7 @@ export function Hero() {
       v.removeEventListener("loadeddata", onReady);
       v.removeEventListener("canplay", onReady);
       document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onPageShow);
       window.removeEventListener("pointerdown", onInteract);
       window.removeEventListener("keydown", onInteract);
       window.removeEventListener("touchstart", onInteract);
@@ -82,7 +93,7 @@ export function Hero() {
             loop
             playsinline
             webkit-playsinline="true"
-            preload="metadata"
+            preload="auto"
             disablepictureinpicture
             disableremoteplayback
             class="pointer-events-none absolute inset-0 h-full w-full object-cover"
