@@ -4,11 +4,7 @@ import { HowItWorks } from "@/components/sections/how-it-works";
 import { ThreePrinciples } from "@/components/sections/three-principles";
 import { CardShowcase } from "@/components/sections/card-showcase";
 import { OnePrice } from "@/components/sections/one-price";
-import { Manifesto } from "@/components/sections/manifesto";
-import { ImpactDashboard } from "@/components/sections/impact-dashboard";
-import { Faq } from "@/components/sections/faq";
-import { DownloadHero } from "@/components/sections/download-hero";
-import { Footer } from "@/components/sections/footer";
+import { BelowFold } from "@/components/below-fold";
 
 export default function Home() {
   return (
@@ -19,11 +15,9 @@ export default function Home() {
       <ThreePrinciples />
       <CardShowcase />
       <OnePrice />
-      <Manifesto />
-      <ImpactDashboard />
-      <Faq />
-      <DownloadHero />
-      <Footer />
+      {/* Manifesto · ImpactDashboard · Faq · DownloadHero · Footer
+          are code-split (see below-fold.tsx) to keep initial JS lean. */}
+      <BelowFold />
     </main>
   );
 }

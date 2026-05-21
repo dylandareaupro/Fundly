@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Button, ArrowRight } from "@/components/ui/button";
@@ -11,16 +12,39 @@ const AWARDS = [
 ];
 
 export function DownloadHero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Play-on-view: the 1.3 MB footer video only downloads/decodes once the
+  // section nears the viewport, and pauses again when it leaves — the poster
+  // covers the rest of the time. Saves bandwidth + decode on initial load.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="relative isolate overflow-visible">
-      {/* Background video */}
+      {/* Background video — played only when in view (see effect above) */}
       <video
+        ref={videoRef}
         aria-hidden
-        autoPlay
         muted
         loop
         playsInline
         preload="none"
+        poster="/media/footer-poster.webp"
         disablePictureInPicture
         disableRemotePlayback
         className="absolute inset-0 -z-20 h-full w-full object-cover"

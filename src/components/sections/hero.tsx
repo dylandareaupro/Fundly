@@ -94,6 +94,7 @@ export function Hero() {
             playsinline
             webkit-playsinline="true"
             preload="auto"
+            poster="/media/header-poster.webp"
             disablepictureinpicture
             disableremoteplayback
             class="pointer-events-none absolute inset-0 h-full w-full object-cover"

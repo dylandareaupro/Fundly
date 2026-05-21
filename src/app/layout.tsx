@@ -6,10 +6,12 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { Cursor } from "@/components/cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
 
+// Plus Jakarta Sans is a variable font: omitting `weight` loads a single
+// variable file covering every weight (200–800) instead of 4 static cuts.
+// With the two styles that's 2 woff2 files total (was 8).
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
